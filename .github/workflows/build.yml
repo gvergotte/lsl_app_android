@@ -27,12 +27,20 @@ jobs:
       - name: Configure and Build APK
         run: |
           buildozer init
-          # Lock Python to 3.11 and configure PyLSL + arm64-v8a target
-          sed -i 's/requirements = python3,kivy/requirements = python3==3.11.0,kivy,pylsl/g' buildozer.spec
+          
+          # Fix 1: Standard python3 requirement (matches host automatically)
+          sed -i 's/requirements = python3,kivy/requirements = python3,kivy,pylsl/g' buildozer.spec
+          
+          # Fix 2: Limit architecture to 64-bit ARM only (arm64-v8a)
           sed -i 's/android.archs = .*/android.archs = arm64-v8a/g' buildozer.spec
+          
+          # Fix 3: Enable p4a master branch for modern C-extension support
+          sed -i 's/#p4a.branch = master/p4a.branch = master/g' buildozer.spec
+          
+          # Fix 4: Add INTERNET and multicast Wi-Fi permissions for LSL
           sed -i 's/# android.permissions = INTERNET/android.permissions = INTERNET, ACCESS_NETWORK_STATE, CHANGE_WIFI_MULTICAST_STATE/g' buildozer.spec
           
-          # Run build
+          # Run build with auto-accept
           yes | buildozer -v android debug
 
       - name: Upload Finished APK
