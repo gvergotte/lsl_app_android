@@ -8,17 +8,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.4.0
         with:
-          python-python-version: '3.11'
+          python-version: '3.11'
 
       - name: Install System Dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
+          sudo apt-get update -y || true
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
             build-essential \
             git \
             ffmpeg \
@@ -43,15 +43,15 @@ jobs:
 
       - name: Install Buildozer and Cython
         run: |
-          pip install --upgrade pip
-          pip install "cython<3.0.0" buildozer
+          python -m pip install --upgrade pip
+          python -m pip install "cython<3.0.0" buildozer
 
       - name: Build APK with Buildozer
         run: |
           buildozer -v android debug
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.1
         with:
           name: python-lsl-app
           path: bin/*.apk
