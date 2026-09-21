@@ -15,6 +15,11 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: Clean previous build cache
+        run: |
+          rm -rf ~/.buildozer
+          rm -rf .buildozer
+
       - name: Install System Dependencies
         run: |
           sudo apt-get update
@@ -43,7 +48,7 @@ jobs:
             lld \
             clang
 
-      - name: Install Buildozer and Cython
+      - name: Install Buildozer and Dependencies
         run: |
           python -m pip install --upgrade pip setuptools
           python -m pip install "cython<3.0.0" buildozer
