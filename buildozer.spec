@@ -5,7 +5,7 @@ package.domain = org.lsl
 source.dir = .
 version = 0.1
 source.include_exts = py,png,jpg,kv,atlas,so
-requirements = python3,kivy==2.3.0
+requirements = python3,kivy==2.3.0,pylsl
 orientation = portrait
 fullscreen = 0
 android.permissions = INTERNET, CHANGE_WIFI_MULTICAST_STATE, ACCESS_NETWORK_STATE, ACCESS_WIFI_STATE
