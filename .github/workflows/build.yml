@@ -1,21 +1,57 @@
 name: Build Android APK
+
 on: [push, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4.2.2
+    runs-on: ubuntu-22.04
 
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1.2.0
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          command: buildozer -v android debug
-          buildozer_version: master
+          python-python-version: '3.11'
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            git \
+            ffmpeg \
+            libsdl2-dev \
+            libsdl2-image-dev \
+            libsdl2-mixin-dev \
+            libsdl2-ttf-dev \
+            libportmidi-dev \
+            libswscale-dev \
+            libavformat-dev \
+            libavcodec-dev \
+            zlib1g-dev \
+            openjdk-17-jdk \
+            autoconf \
+            automake \
+            libtool \
+            pkg-config \
+            cmake \
+            ninja-build \
+            unzip \
+            zip
+
+      - name: Install Buildozer and Cython
+        run: |
+          pip install --upgrade pip
+          pip install "cython<3.0.0" buildozer
+
+      - name: Build APK with Buildozer
+        run: |
+          buildozer -v android debug
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4.6.1
+        uses: actions/upload-artifact@v4
         with:
           name: python-lsl-app
           path: bin/*.apk
