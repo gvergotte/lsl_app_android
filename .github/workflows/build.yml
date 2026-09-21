@@ -3,19 +3,19 @@ on: [push, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
+        uses: ArtemSBulgakov/buildozer-action@v1.2.0
         with:
           command: buildozer -v android debug
           buildozer_version: master
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.1
         with:
           name: python-lsl-app
           path: bin/*.apk
