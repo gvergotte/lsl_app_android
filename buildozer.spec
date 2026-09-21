@@ -5,13 +5,26 @@ package.domain = org.lsl
 source.dir = .
 version = 0.1
 source.include_exts = py,png,jpg,kv,atlas,so
+# (list) Application requirements
 requirements = python3,kivy==2.3.0,pylsl
-orientation = portrait
-fullscreen = 0
-android.permissions = INTERNET, CHANGE_WIFI_MULTICAST_STATE, ACCESS_NETWORK_STATE, ACCESS_WIFI_STATE
+
+# (int) Target Android API
 android.api = 33
+
+# (int) Minimum API supported
 android.minapi = 24
+
+# CRITICAL FIX: Pin NDK to r25b (NDK r28 breaks C++ cross-compilation in p4a)
+android.ndk = 25b
+android.ndk_path = 
+
+# (str) Supported architectures
 android.archs = arm64-v8a
+
+# (list) Permissions needed for LSL network sockets
+android.permissions = INTERNET, ACCESS_NETWORK_STATE
+
+# (bool) Accept SDK license automatically
 android.accept_sdk_license = True
 
 [buildozer]
