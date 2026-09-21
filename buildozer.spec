@@ -14,6 +14,8 @@ android.api = 33
 # (int) Minimum API supported
 android.minapi = 24
 
+android.add_libs_arm64_v8a = liblsl.so
+
 # CRITICAL FIX: Pin NDK to r25b (NDK r28 breaks C++ cross-compilation in p4a)
 android.ndk = 25b
 android.ndk_path = 
